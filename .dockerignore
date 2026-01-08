@@ -1,0 +1,13 @@
+# Ignore the massive node modules folder during build
+**/node_modules
+
+# Ignore other clutter
+.git
+.gitignore
+.venv
+venv
+__pycache__
+*.pyc
+.idea
+db.sqlite3
+media

@@ -1,0 +1,48 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Engineer Portfolio</title>
+
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans antialiased flex flex-col min-h-screen">
+
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="{% url 'home' %}" class="text-xl font-bold text-blue-400">
+                        Dev<span class="text-white">Portfolio</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{% url 'home' %}" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#about" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#projects" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                        <a href="#resume" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Resume</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 border-t border-gray-700 mt-12">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-400 text-sm">
+                &copy; 2024 AI Engineer Portfolio. Built with Django & Tailwind.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

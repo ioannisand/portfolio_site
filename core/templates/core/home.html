@@ -1,0 +1,228 @@
+
+<!-- TEMPLATE ARCHITECTURE AND STYLING NOTES:
+
+LAYOUT STRATEGY
+
+We use 'max-w-6xl mx-auto' to ensure a consistent alignment on the left edge.
+
+The Hero section uses 'flex-col-reverse md:flex-row'. This stacks text below the image on mobile, but places text left and image right on desktop.
+
+IMAGE SIZING FIXES (Brute Force)
+
+We use inline CSS styles (style="...") to override potential Tailwind build issues for images.
+
+Skills: Forced to 64x64px squares.
+
+Certificates: Forced to 120x80px rectangles (ID card size).
+
+All images use 'object-fit: contain' to fit inside these boxes without stretching.
+
+DYNAMIC DATA
+
+Data is pulled from the Django Context (profile, skills, projects).
+
+We use the '|default' filter for placeholders.
+
+We use '|linebreaksbr' to preserve formatting from the Admin panel. -->
+
+
+{% extends 'base.html' %}
+{% load static tailwind_tags %}
+
+{% block content %}
+
+<section class="relative bg-gray-900 border-b border-gray-800 mb-8 mt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-32">
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+
+            <div class="w-full md:w-[70%] text-center md:text-left space-y-8">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-2">
+                        {{ profile.name|default:"Ioannis Andreadakis" }}
+                    </h1>
+                    <h2 class="text-blue-500 font-bold tracking-wide uppercase text-sm md:text-base">
+                        {{ profile.title|default:"Software & Automation Engineer" }}
+                    </h2>
+                </div>
+
+                <div class="md:hidden flex justify-center py-6">
+                    <div class="relative w-56 h-56 flex-shrink-0">
+                        <div class="absolute inset-0 bg-blue-600 rounded-full opacity-20 blur-xl"></div>
+                        {% if profile.profile_image %}
+                            <img class="relative w-full h-full object-cover rounded-full border-4 border-gray-800 shadow-2xl" src="{{ profile.profile_image.url }}" alt="Profile">
+                        {% else %}
+                            <div class="relative w-full h-full bg-gray-800 rounded-full flex items-center justify-center border-4 border-gray-700 text-6xl">👨‍💻</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="text-lg text-gray-400 leading-relaxed max-w-3xl">
+                    {{ profile.bio|linebreaksbr|default:"Specializing in Enterprise Automation..." }}
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+                    <a href="#projects" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition shadow-lg w-auto text-center">
+                        View Portfolio
+                    </a>
+                    <a href="{% if profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}#{% endif %}" target="_blank" class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-blue-100 border border-gray-700 rounded-lg text-sm font-medium transition w-auto text-center">
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+
+            <div class="hidden md:flex w-full md:w-[30%] justify-end md:ml-auto">
+                <div class="relative w-64 h-64 md:w-72 md:h-72 flex-shrink-0">
+                    <div class="absolute inset-0 bg-blue-600 rounded-full opacity-20 blur-xl"></div>
+                    {% if profile.profile_image %}
+                        <img class="relative w-full h-full object-cover rounded-full border-4 border-gray-800 shadow-2xl" src="{{ profile.profile_image.url }}" alt="Profile">
+                    {% else %}
+                        <div class="relative w-full h-full bg-gray-800 rounded-full flex items-center justify-center border-4 border-gray-700 text-6xl">👨‍💻</div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-4">
+
+    <div class="accordion-item border border-gray-800 rounded-lg bg-gray-800/50 overflow-hidden">
+        <button class="accordion-header w-full flex justify-between items-center p-4 bg-gray-800 hover:bg-gray-750 transition focus:outline-none">
+            <div class="text-left">
+                <h2 class="text-lg font-bold text-white">Tech Stack</h2>
+                <p class="text-xs text-gray-400">Tools & Technologies</p>
+            </div>
+            <svg style="width: 24px; height: 24px;" class="text-blue-500 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+
+        <div class="accordion-content hidden bg-gray-900 border-t border-gray-800">
+            <div class="p-6 md:p-10">
+                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-6">
+                    {% for skill in featured_skills %}
+                    <div class="bg-gray-700/50 rounded-lg p-4 w-full sm:w-40 flex flex-col items-center justify-center border border-gray-700 hover:border-blue-500 transition group">
+                        <div style="width: 64px; height: 64px;" class="mb-3 flex items-center justify-center">
+                            {% if skill.icon %}
+                                <img src="{{ skill.icon.url }}" alt="{{ skill.name }}" style="width: 100%; height: 100%; object-fit: contain;">
+                            {% else %}
+                                <div class="flex items-center justify-center text-3xl h-full w-full">⚡</div>
+                            {% endif %}
+                        </div>
+                        <span class="text-sm font-medium text-gray-300 group-hover:text-white text-center leading-tight">{{ skill.name }}</span>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-500 w-full text-center">No skills featured yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item border border-gray-800 rounded-lg bg-gray-800/50 overflow-hidden">
+        <button class="accordion-header w-full flex justify-between items-center p-4 bg-gray-800 hover:bg-gray-750 transition focus:outline-none">
+            <div class="text-left">
+                <h2 class="text-lg font-bold text-white">Experience</h2>
+                <p class="text-xs text-gray-400">Professional Journey</p>
+            </div>
+            <svg style="width: 24px; height: 24px;" class="text-blue-500 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+
+        <div class="accordion-content hidden bg-gray-900 border-t border-gray-800">
+            <div class="p-6 md:p-10 space-y-8">
+                {% for job in latest_experience %}
+                <div class="flex flex-col md:flex-row gap-4 md:gap-10">
+                    <div class="w-full md:w-32 text-left md:text-right flex-shrink-0">
+                        <span class="text-sm font-bold text-gray-500 block">{{ job.start_date|date:"Y" }}</span>
+                        <span class="text-xs text-gray-600 block uppercase">{% if job.is_current %}Present{% else %}{{ job.end_date|date:"Y" }}{% endif %}</span>
+                    </div>
+                    <div class="relative flex-1 pb-8 md:border-l border-gray-800 md:pl-10 last:border-0">
+                        <div class="hidden md:block absolute -left-1.5 top-1.5 h-3 w-3 rounded-full bg-blue-600 ring-4 ring-gray-900"></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">{{ job.role }}</h3>
+                            <h4 class="text-blue-400 font-medium mb-4">{{ job.company }}</h4>
+                            <div class="prose prose-invert prose-sm text-gray-400 max-w-none">{{ job.description|linebreaks }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item border border-gray-800 rounded-lg bg-gray-800/50 overflow-hidden">
+        <button class="accordion-header w-full flex justify-between items-center p-4 bg-gray-800 hover:bg-gray-750 transition focus:outline-none">
+            <div class="text-left">
+                <h2 class="text-lg font-bold text-white">Learning Journey</h2>
+                <p class="text-xs text-gray-400">Education & Certifications</p>
+            </div>
+            <svg style="width: 24px; height: 24px;" class="text-blue-500 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+
+        <div class="accordion-content hidden bg-gray-900 border-t border-gray-800">
+            <div class="p-6 md:p-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6 flex items-center"><span class="text-blue-500 mr-3">🎓</span> Education</h3>
+                        <div class="space-y-8">
+                            {% for edu in education_list %}
+                            <div class="relative pl-6 border-l-2 border-gray-700">
+                                <div class="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-gray-800 border-2 border-gray-600"></div>
+                                <h4 class="text-lg font-bold text-white leading-none">{{ edu.institution }}</h4>
+                                <p class="text-blue-400 mt-1">{{ edu.degree }}</p>
+                                <p class="text-xs text-gray-500 mt-1">{{ edu.start_date|date:"Y" }} - {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6 flex items-center"><span class="text-blue-500 mr-3">📜</span> Certifications</h3>
+                        <div class="grid gap-4">
+                            {% for cert in latest_certs %}
+                            <a href="{{ cert.url|default:'#' }}" target="_blank" class="group block bg-gray-800 border border-gray-700 rounded-lg p-4 hover:border-blue-500 transition">
+                                <div class="flex flex-col sm:flex-row items-start gap-4">
+                                    <div style="width: 120px; height: 80px;" class="flex-shrink-0 bg-white rounded-md p-1 border border-gray-600 overflow-hidden mx-auto sm:mx-0">
+                                        {% if cert.image %}
+                                            <img src="{{ cert.image.url }}" alt="{{ cert.name }}" style="width: 100%; height: 100%; object-fit: contain;">
+                                        {% else %}
+                                            <div class="w-full h-full flex items-center justify-center text-2xl">🏆</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-1 min-w-0 text-center sm:text-left">
+                                        <h5 class="text-sm font-bold text-gray-200 group-hover:text-white truncate">{{ cert.name }}</h5>
+                                        <p class="text-xs text-gray-500 mt-1">{{ cert.issuer }}</p>
+                                        <p class="text-xs text-gray-600 mt-0.5">{{ cert.date_issued|date:"Y" }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const headers = document.querySelectorAll('.accordion-header');
+
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.accordion-icon');
+
+                content.classList.toggle('hidden');
+
+                if (content.classList.contains('hidden')) {
+                    icon.classList.remove('rotate-180');
+                } else {
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    restart: always
+
+  # New Service: The CSS Compiler
+  tailwind:
+    build: .
+    # This command watches for changes and regenerates CSS instantly
+    command: python manage.py tailwind start
+    volumes:
+      - .:/app
+    depends_on:
+      - web
+    tty: true
+    stdin_open: true
+    # No ports needed, it just writes files to the volume

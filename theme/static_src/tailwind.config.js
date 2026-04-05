@@ -11,15 +11,13 @@ module.exports = {
          * HTML. Paths to Django template files that will contain Tailwind CSS classes.
          */
 
-        /* Templates within theme app (<tailwinds_app_name>/templates/**/*.html) */
+        /* Templates within theme app */
         '../templates/**/*.html',
 
-        /* * Main templates directory of the project (BASE_DIR/templates/**/*.html)
-         */
+        /* Main templates directory of the project */
         '../../templates/**/*.html',
 
-        /* * Templates in other django apps (YOUR_APP_NAME/templates/**/*.html)
-         */
+        /* Templates in other django apps */
         '../../core/templates/**/*.html',
         '../../projects/templates/**/*.html',
         '../../resume/templates/**/*.html',
@@ -40,6 +38,5 @@ module.exports = {
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio'),
-        require("daisyui"), // We added this during setup!
     ],
 }

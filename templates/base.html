@@ -2,47 +2,108 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Engineer Portfolio</title>
-
-    {% tailwind_css %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ioannis Andreadakis — AI & Data Engineer</title>
+  {% tailwind_css %}
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans antialiased flex flex-col min-h-screen">
 
-    <nav class="bg-gray-800 border-b border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <a href="{% url 'home' %}" class="text-xl font-bold text-blue-400">
-                        Dev<span class="text-white">Portfolio</span>
-                    </a>
-                </div>
+  <nav class="bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
+      <div class="flex items-center justify-between h-16">
 
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="{% url 'home' %}" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#about" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="#projects" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
-                        <a href="#resume" class="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Resume</a>
-                    </div>
-                </div>
-            </div>
+        <a href="{% url 'home' %}" class="font-bold text-base tracking-tight flex items-center gap-1.5">
+          <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">I</span><span class="text-white">oannis</span>
+          <span class="text-gray-600 font-light">·</span>
+          <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">A</span><span class="text-white">ndreadakis</span>
+        </a>
+
+        {# Desktop nav #}
+        <div class="hidden md:flex items-center space-x-0.5">
+          <a href="#about"          class="nav-link">About</a>
+          <a href="#stack"          class="nav-link">Stack</a>
+          <a href="#projects"       class="nav-link">Projects</a>
+          <a href="#experience"     class="nav-link">Experience</a>
+          <a href="#certifications" class="nav-link">Certs</a>
+          <a href="#education"      class="nav-link">Education</a>
         </div>
-    </nav>
 
-    <main class="flex-grow">
-        {% block content %}
-        {% endblock %}
-    </main>
+        {# Mobile hamburger #}
+        <button id="mobile-menu-btn"
+                class="md:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 transition"
+                aria-label="Open menu">
+          <svg id="icon-open"  class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
 
-    <footer class="bg-gray-800 border-t border-gray-700 mt-12">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-400 text-sm">
-                &copy; 2024 AI Engineer Portfolio. Built with Django & Tailwind.
-            </p>
-        </div>
-    </footer>
+      </div>
+    </div>
+
+    {# Mobile menu panel #}
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-gray-900">
+      <div class="px-4 py-3 space-y-0.5">
+        <a href="#about"          class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">About</a>
+        <a href="#stack"          class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Stack</a>
+        <a href="#projects"       class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Projects</a>
+        <a href="#experience"     class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Experience</a>
+        <a href="#certifications" class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Certifications</a>
+        <a href="#education"      class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Education</a>
+      </div>
+    </div>
+  </nav>
+
+  <style>
+    .nav-link {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #9ca3af;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-link:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+  </style>
+
+  <main class="flex-grow">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="bg-gray-900 border-t border-gray-800 mt-12">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-gray-500 text-sm">
+        &copy; 2025 Ioannis Andreadakis. Built with Django &amp; Tailwind.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const btn   = document.getElementById('mobile-menu-btn');
+    const menu  = document.getElementById('mobile-menu');
+    const open  = document.getElementById('icon-open');
+    const close = document.getElementById('icon-close');
+
+    btn.addEventListener('click', () => {
+      const isHidden = menu.classList.toggle('hidden');
+      open.classList.toggle('hidden', !isHidden);
+      close.classList.toggle('hidden', isHidden);
+    });
+
+    menu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        open.classList.remove('hidden');
+        close.classList.add('hidden');
+      });
+    });
+  </script>
 
 </body>
 </html>

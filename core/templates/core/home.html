@@ -43,8 +43,8 @@
     <div class="text-center md:text-left">
 
       <h1 class="text-4xl md:text-6xl font-extrabold leading-tight
-                 bg-gradient-to-r from-white via-white to-blue-200 bg-clip-text text-transparent">
-        {{ profile.name|default:"Ioannis Andreadakis" }}
+                 bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
+        {{ profile.title|default:"AI &amp; Data Engineer" }}
       </h1>
 
       <p class="text-gray-400 text-lg leading-relaxed mt-6">
@@ -87,7 +87,7 @@
 </section>
 
 {# ───────────────────────── TECH STACK ───────────────────────── #}
-<section id="stack" class="py-16 border-b border-gray-800">
+<section id="stack" class="py-4 border-b border-gray-800">
   <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
     <details open>
       <summary class="section-toggle">Tech Stack</summary>
@@ -117,7 +117,7 @@
 
 {# ───────────────────────── FEATURED PROJECTS ───────────────────────── #}
 {% if featured_projects %}
-<section id="projects" class="py-16 border-b border-gray-800">
+<section id="projects" class="py-4 border-b border-gray-800">
   <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
     <details open>
       <summary class="section-toggle">Featured Projects</summary>
@@ -180,7 +180,7 @@
 {% endif %}
 
 {# ───────────────────────── RESUME ───────────────────────── #}
-<section id="experience" class="py-16">
+<section id="experience" class="py-4">
   <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;overflow:hidden;">
     <details open>
       <summary class="section-toggle">Experience</summary>
@@ -224,7 +224,7 @@
 </section>
 
 {# ───────────────────────── CERTIFICATIONS ───────────────────────── #}
-<section id="certifications" class="py-16 border-t border-gray-800">
+<section id="certifications" class="py-4 border-t border-gray-800">
   <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
     <details open>
       <summary class="section-toggle">Certifications</summary>
@@ -261,7 +261,7 @@
 </section>
 
 {# ───────────────────────── EDUCATION ───────────────────────── #}
-<section id="education" class="py-16 border-t border-gray-800">
+<section id="education" class="py-4 border-t border-gray-800">
   <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
     <details open>
       <summary class="section-toggle">Education</summary>
@@ -286,50 +286,66 @@
 </section>
 
 <style>
-  /* Section headers */
+  /* Section headers — compact gradient pill */
   .section-toggle {
-    font-size: 2rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    color: #fff;
+    letter-spacing: 0.03em;
+    color: #e2e8f0;
     cursor: pointer;
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
     user-select: none;
-    padding-bottom: 14px;
+    padding: 14px 20px;
+    width: 100%;
+    box-sizing: border-box;
     position: relative;
+    background: linear-gradient(135deg, rgba(37,99,235,0.18) 0%, rgba(6,182,212,0.10) 100%);
+    border: 1px solid rgba(59,130,246,0.22);
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
   }
   .section-toggle::-webkit-details-marker { display: none; }
 
-  /* Gradient underline accent */
+  /* Left accent bar */
   .section-toggle::before {
     content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 48px; height: 3px;
-    background: linear-gradient(to right, #3b82f6, #06b6d4);
+    display: inline-block;
+    width: 3px;
+    height: 1.1em;
+    background: linear-gradient(to bottom, #3b82f6, #06b6d4);
     border-radius: 999px;
+    flex-shrink: 0;
   }
 
   /* Chevron */
   .section-toggle::after {
     content: '';
     display: inline-block;
-    width: 10px; height: 10px;
-    border-right: 2.5px solid #60a5fa;
-    border-bottom: 2.5px solid #60a5fa;
+    width: 8px; height: 8px;
+    border-right: 2px solid #60a5fa;
+    border-bottom: 2px solid #60a5fa;
     transform: rotate(45deg);
     transition: transform 0.2s ease;
     flex-shrink: 0;
+    margin-left: auto;
     margin-top: -2px;
   }
   details[open] > .section-toggle::after {
     transform: rotate(-135deg);
-    margin-top: 4px;
+    margin-top: 3px;
   }
 
-  .section-toggle:hover { color: #93c5fd; }
+  .section-toggle:hover {
+    color: #bfdbfe;
+    background: linear-gradient(135deg, rgba(37,99,235,0.28) 0%, rgba(6,182,212,0.16) 100%);
+    border-color: rgba(59,130,246,0.40);
+  }
+
+  details { width: 100%; }
 
   /* Hero image responsive */
   .hero-desktop-img { display: none; }

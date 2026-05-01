@@ -7,26 +7,30 @@
   <title>Ioannis Andreadakis — AI & Data Engineer</title>
   {% tailwind_css %}
 </head>
-<body class="text-gray-100 font-sans antialiased flex flex-col min-h-screen" style="background: linear-gradient(160deg, #0a0f1e 0%, #0f172a 35%, #111827 65%, #0d1425 100%); min-height: 100vh;">
+<body class="text-gray-100 font-sans antialiased flex flex-col min-h-screen relative">
 
-  <nav class="bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
+  {# ───────── Animated background ───────── #}
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <nav class="bg-gray-900/70 backdrop-blur-md border-b border-gray-800/80 sticky top-0 z-50">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1200px;">
       <div class="flex items-center justify-between h-16">
 
-        <a href="{% url 'home' %}" class="font-bold text-base tracking-tight flex items-center gap-1.5">
-          <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Ioannis</span>
-          <span class="text-gray-600 font-light">·</span>
-          <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Andreadakis</span>
+        <a href="{% url 'home' %}" class="brand-monogram" aria-label="Home">
+          <span>IA</span>
         </a>
 
         {# Desktop nav #}
         <div class="hidden md:flex items-center space-x-0.5">
-          <a href="#about"          class="nav-link">About</a>
-          <a href="#stack"          class="nav-link">Stack</a>
-          <a href="#projects"       class="nav-link">Projects</a>
-          <a href="#experience"     class="nav-link">Experience</a>
-          <a href="#certifications" class="nav-link">Certs</a>
-          <a href="#education"      class="nav-link">Education</a>
+          <a href="#about"    class="nav-link">About</a>
+          <a href="#stack"    class="nav-link">Stack</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#journey"  class="nav-link">Journey</a>
         </div>
 
         {# Mobile hamburger #}
@@ -45,19 +49,111 @@
     </div>
 
     {# Mobile menu panel #}
-    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-gray-900">
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-gray-900/95 backdrop-blur-md">
       <div class="px-4 py-3 space-y-0.5">
-        <a href="#about"          class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">About</a>
-        <a href="#stack"          class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Stack</a>
-        <a href="#projects"       class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Projects</a>
-        <a href="#experience"     class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Experience</a>
-        <a href="#certifications" class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Certifications</a>
-        <a href="#education"      class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Education</a>
+        <a href="#about"    class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">About</a>
+        <a href="#stack"    class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Stack</a>
+        <a href="#projects" class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Projects</a>
+        <a href="#journey"  class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition">Journey</a>
       </div>
     </div>
   </nav>
 
   <style>
+    /* ───────── Page background ───────── */
+    body {
+      background:
+        radial-gradient(ellipse at 20% 10%, #0f1d3a 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 20%, #0d2138 0%, transparent 50%),
+        linear-gradient(160deg, #07091a 0%, #0a0f1f 40%, #0b1120 70%, #07091a 100%);
+      background-attachment: fixed;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      opacity: 0.55;
+      will-change: transform;
+    }
+    .bg-orb-1 {
+      width: 520px; height: 520px;
+      top: -120px; left: -120px;
+      background: radial-gradient(circle, rgba(59,130,246,0.55), rgba(59,130,246,0) 70%);
+      animation: orb-drift-1 28s ease-in-out infinite alternate;
+    }
+    .bg-orb-2 {
+      width: 480px; height: 480px;
+      top: 30%; right: -160px;
+      background: radial-gradient(circle, rgba(6,182,212,0.45), rgba(6,182,212,0) 70%);
+      animation: orb-drift-2 34s ease-in-out infinite alternate;
+    }
+    .bg-orb-3 {
+      width: 600px; height: 600px;
+      bottom: -200px; left: 30%;
+      background: radial-gradient(circle, rgba(99,102,241,0.40), rgba(99,102,241,0) 70%);
+      animation: orb-drift-3 40s ease-in-out infinite alternate;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(148,163,184,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.045) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    @keyframes orb-drift-1 {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(120px, 80px) scale(1.15); }
+    }
+    @keyframes orb-drift-2 {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(-100px, 60px) scale(1.1); }
+    }
+    @keyframes orb-drift-3 {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(-80px, -120px) scale(1.2); }
+    }
+
+    main, nav, footer { position: relative; z-index: 1; }
+
+    /* ───────── Brand monogram ───────── */
+    .brand-monogram {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(6,182,212,0.10));
+      border: 1px solid rgba(59,130,246,0.30);
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .brand-monogram span {
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, #60a5fa, #22d3ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .brand-monogram:hover {
+      transform: translateY(-1px);
+      border-color: rgba(59,130,246,0.55);
+      background: linear-gradient(135deg, rgba(59,130,246,0.28), rgba(6,182,212,0.18));
+    }
+
+    /* ───────── Nav links ───────── */
     .nav-link {
       padding: 6px 12px;
       border-radius: 6px;
@@ -70,14 +166,18 @@
       color: #fff;
       background: rgba(255,255,255,0.06);
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bg-orb { animation: none !important; }
+    }
   </style>
 
   <main class="flex-grow">
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="bg-gray-900 border-t border-gray-800 mt-12">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+  <footer class="bg-gray-900/60 backdrop-blur-sm border-t border-gray-800 mt-12">
+    <div class="mx-auto py-6 px-4 sm:px-6 lg:px-8" style="max-width:1200px;">
       <p class="text-center text-gray-500 text-sm">
         &copy; 2025 Ioannis Andreadakis. Built with Django &amp; Tailwind.
       </p>

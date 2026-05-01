@@ -4,356 +4,700 @@
 {% block content %}
 
 {# ───────────────────────── HERO ───────────────────────── #}
-<section id="about" class="relative bg-gray-900 border-b border-gray-800 py-20 md:py-32 overflow-hidden">
+<section id="about" class="relative border-b border-gray-800/60 py-20 md:py-28 overflow-hidden">
+  <div class="relative mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1200px;">
 
-  {# Background glow orbs #}
-  <div class="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
-    <div class="absolute -top-32 -right-32 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 -left-24 w-80 h-80 bg-indigo-900/20 rounded-full blur-3xl"></div>
-  </div>
+    <div class="hero-grid">
 
-  <div class="relative mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
+      {# Text column — slides in from LEFT #}
+      <div class="hero-text reveal-left text-center md:text-left">
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight
+                   bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
+          {{ profile.name|default:"Ioannis Andreadakis" }}
+        </h1>
 
-    {# Mobile-only image #}
-    <div class="hero-mobile-img flex justify-center" style="margin-bottom:28px;">
-      <div class="relative" style="width:192px;height:192px;">
-        <div class="absolute inset-0 bg-blue-500/25 rounded-full blur-2xl"></div>
-        {% if profile.profile_image %}
-          <img class="relative w-full h-full object-cover rounded-full border-2 border-blue-500/40 shadow-2xl ring-4 ring-blue-500/10"
-               src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
-        {% else %}
-          <div class="relative w-full h-full bg-gray-800 rounded-full flex items-center justify-center border-2 border-blue-500/30 text-6xl ring-4 ring-blue-500/10">👨‍💻</div>
+        <p class="hero-subtitle mt-4">
+          {{ profile.title|default:"AI &amp; Data Engineer" }}
+        </p>
+
+        {% if profile.bio %}
+        <p class="text-gray-400 text-base leading-relaxed mt-5 max-w-xl mx-auto md:mx-0">
+          {{ profile.bio }}
+        </p>
         {% endif %}
+
+        <div class="flex flex-wrap gap-3 justify-center md:justify-start mt-8">
+          <a href="#projects"
+             class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400
+                    text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5">
+            View Projects
+          </a>
+          {% if profile.linkedin_url %}
+          <a href="{{ profile.linkedin_url }}" target="_blank" class="hero-btn-ghost">LinkedIn</a>
+          {% endif %}
+          {% if profile.github_url %}
+          <a href="{{ profile.github_url }}" target="_blank" class="hero-btn-ghost">GitHub</a>
+          {% endif %}
+          {% if profile.resume_file %}
+          <a href="{{ profile.resume_file.url }}" download class="hero-btn-ghost">Download CV</a>
+          {% endif %}
+        </div>
       </div>
-    </div>
 
-    {# Desktop: floated image #}
-    <div class="hero-desktop-img" style="float:right;margin:0 0 24px 40px;shape-outside:circle(50%);">
-      <div class="relative" style="width:248px;height:248px;">
-        <div class="absolute inset-0 bg-blue-500/25 rounded-full blur-2xl"></div>
-        {% if profile.profile_image %}
-          <img class="relative w-full h-full object-cover rounded-full border-2 border-blue-500/40 shadow-2xl ring-4 ring-blue-500/10"
-               src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
-        {% else %}
-          <div class="relative w-full h-full bg-gray-800 rounded-full flex items-center justify-center border-2 border-blue-500/30 text-6xl ring-4 ring-blue-500/10">👨‍💻</div>
-        {% endif %}
+      {# Image column — slides in from RIGHT #}
+      <div class="hero-image reveal-right">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-glow"></div>
+          <div class="hero-photo-ring"></div>
+          {% if profile.profile_image %}
+            <img class="hero-photo" src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+          {% else %}
+            <div class="hero-photo flex items-center justify-center text-7xl bg-gray-800">👨‍💻</div>
+          {% endif %}
+        </div>
       </div>
+
     </div>
-
-    <div class="text-center md:text-left">
-
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight
-                 bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
-        {{ profile.title|default:"AI &amp; Data Engineer" }}
-      </h1>
-
-      <p class="text-gray-400 text-lg leading-relaxed mt-6">
-        {{ profile.bio|default:"Specializing in Enterprise Automation and AI Engineering." }}
-      </p>
-
-      <div class="flex flex-wrap gap-3 justify-center md:justify-start mt-8">
-        <a href="#projects"
-           class="px-6 py-2.5
-                  bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-cyan-500
-                  text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/20 transition-all">
-          View Projects
-        </a>
-        {% if profile.linkedin_url %}
-        <a href="{{ profile.linkedin_url }}" target="_blank"
-           class="px-6 py-2.5 bg-gray-800 hover:bg-gray-700
-                  text-gray-200 border border-gray-700 hover:border-blue-500/50 rounded-lg text-sm font-semibold transition-all">
-          LinkedIn
-        </a>
-        {% endif %}
-        {% if profile.github_url %}
-        <a href="{{ profile.github_url }}" target="_blank"
-           class="px-6 py-2.5 bg-gray-800 hover:bg-gray-700
-                  text-gray-200 border border-gray-700 hover:border-blue-500/50 rounded-lg text-sm font-semibold transition-all">
-          GitHub
-        </a>
-        {% endif %}
-        {% if profile.resume_file %}
-        <a href="{{ profile.resume_file.url }}" download
-           class="px-6 py-2.5 bg-gray-800 hover:bg-gray-700
-                  text-gray-200 border border-gray-700 hover:border-blue-500/50 rounded-lg text-sm font-semibold transition-all">
-          Download CV
-        </a>
-        {% endif %}
-      </div>
-    </div>
-
-    <div style="clear:both;"></div>
   </div>
 </section>
 
-{# ───────────────────────── TECH STACK ───────────────────────── #}
-<section id="stack" class="py-4 border-b border-gray-800">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
-    <details open>
-      <summary class="section-toggle">Tech Stack</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;">
-        {% for skill in featured_skills %}
-        <div style="width:88px;flex-shrink:0;"
-             class="flex flex-col items-center gap-2 p-3 rounded-xl bg-gray-800/80 border border-gray-700
-                    hover:border-blue-500/60 hover:bg-gray-800 hover:shadow-lg hover:shadow-blue-500/10
-                    transition-all group cursor-default">
-          <div style="width:40px;height:40px;flex-shrink:0;" class="flex items-center justify-center overflow-hidden">
-            {% if skill.icon %}
-              <img src="{{ skill.icon.url }}" alt="{{ skill.name }}"
-                   style="width:100%;height:100%;object-fit:contain;" class="transition-transform group-hover:scale-110">
-            {% else %}
-              <span class="text-2xl">⚡</span>
-            {% endif %}
-          </div>
-          <span class="text-xs text-gray-400 group-hover:text-blue-300 text-center leading-tight transition-colors">{{ skill.name }}</span>
-        </div>
-        {% empty %}
-        <p class="text-gray-500">No skills featured yet.</p>
-        {% endfor %}
-      </div>
-    </details>
+{# ───────────────────────── TECH STACK CAROUSEL ───────────────────────── #}
+<section id="stack" class="py-16 border-b border-gray-800/60">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1200px;">
+    <h2 class="section-heading">Tech Stack</h2>
   </div>
+
+  {% if featured_skills %}
+  <div class="marquee mt-8">
+    <div class="marquee-track">
+      {% for skill in featured_skills %}
+      <div class="skill-card">
+        <div class="skill-icon">
+          {% if skill.icon %}
+            <img src="{{ skill.icon.url }}" alt="{{ skill.name }}">
+          {% else %}
+            <span>⚡</span>
+          {% endif %}
+        </div>
+        <span class="skill-name">{{ skill.name }}</span>
+      </div>
+      {% endfor %}
+      {# duplicate for seamless loop #}
+      {% for skill in featured_skills %}
+      <div class="skill-card" aria-hidden="true">
+        <div class="skill-icon">
+          {% if skill.icon %}
+            <img src="{{ skill.icon.url }}" alt="">
+          {% else %}
+            <span>⚡</span>
+          {% endif %}
+        </div>
+        <span class="skill-name">{{ skill.name }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1200px;">
+    <p class="text-gray-500 mt-6">No skills featured yet.</p>
+  </div>
+  {% endif %}
 </section>
 
 {# ───────────────────────── FEATURED PROJECTS ───────────────────────── #}
 {% if featured_projects %}
-<section id="projects" class="py-4 border-b border-gray-800">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
-    <details open>
-      <summary class="section-toggle">Featured Projects</summary>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:28px;">
-        {% for project in featured_projects %}
-        <div class="bg-gray-800/80 border border-gray-700 rounded-xl overflow-hidden
-                    hover:border-blue-500/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10
-                    transition-all duration-200 group flex flex-col">
-          {% if project.cover_image %}
-            <div class="relative overflow-hidden h-44">
-              <img src="{{ project.cover_image.url }}" alt="{{ project.title }}"
-                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
-            </div>
-          {% else %}
-            <div class="w-full h-44 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center text-5xl">🚀</div>
+<section id="projects" class="py-16 border-b border-gray-800/60">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1200px;">
+    <h2 class="section-heading">Personal Projects</h2>
+
+    <div class="projects-grid mt-10">
+      {% for project in featured_projects %}
+      <article class="project-card reveal-up" style="--delay: {{ forloop.counter0 }}00ms;">
+        {% if project.cover_image %}
+          <div class="project-cover">
+            <img src="{{ project.cover_image.url }}" alt="{{ project.title }}">
+            <div class="project-cover-fade"></div>
+          </div>
+        {% else %}
+          <div class="project-cover project-cover-empty">🚀</div>
+        {% endif %}
+
+        <div class="project-body">
+          <h3 class="project-title">{{ project.title }}</h3>
+          <p class="project-summary">{{ project.summary }}</p>
+
+          {% with metrics=project.metrics.all %}
+          {% if metrics %}
+          <div class="project-metrics">
+            {% for m in metrics %}
+            <span class="metric-pill">{{ m.name }}: <b>{{ m.value }}</b></span>
+            {% endfor %}
+          </div>
           {% endif %}
+          {% endwith %}
 
-          <div class="p-5 flex flex-col flex-1">
-            <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-1">
-              {{ project.title }}
-            </h3>
-            <p class="text-sm text-gray-400 mb-4 flex-1 leading-relaxed">{{ project.summary }}</p>
+          <div class="project-tags">
+            {% for skill in project.skills.all|slice:":5" %}
+              <span class="tag">{{ skill.name }}</span>
+            {% endfor %}
+          </div>
 
-            {% with metrics=project.metrics.all %}
-            {% if metrics %}
-            <div class="flex flex-wrap gap-2 mb-4">
-              {% for m in metrics %}
-              <span class="text-xs font-mono bg-blue-500/10 border border-blue-500/20 text-blue-300 rounded-lg px-2.5 py-1">
-                {{ m.name }}: <span class="font-bold">{{ m.value }}</span>
-              </span>
-              {% endfor %}
-            </div>
-            {% endif %}
-            {% endwith %}
-
-            <div class="flex flex-wrap gap-2 mb-4">
-              {% for skill in project.skills.all|slice:":5" %}
-                <span class="text-xs px-2.5 py-0.5 bg-gray-700/80 text-gray-300 rounded-full border border-gray-600">{{ skill.name }}</span>
-              {% endfor %}
-            </div>
-
-            <div class="flex gap-2 flex-wrap">
-              {% for link in project.links.all %}
-                <a href="{{ link.url }}" target="_blank"
-                   class="text-xs px-3 py-1.5 bg-gray-700 hover:bg-blue-600 text-gray-300 hover:text-white
-                          border border-gray-600 hover:border-blue-500
-                          rounded-lg transition-all font-medium">
-                  {{ link.label|default:link.get_type_display }}
-                </a>
-              {% endfor %}
-            </div>
+          <div class="project-links">
+            {% for link in project.links.all %}
+              <a href="{{ link.url }}" target="_blank" class="project-link">
+                {{ link.label|default:link.get_type_display }}
+              </a>
+            {% endfor %}
           </div>
         </div>
-        {% endfor %}
-      </div>
-    </details>
+      </article>
+      {% endfor %}
+    </div>
   </div>
 </section>
 {% endif %}
 
-{# ───────────────────────── RESUME ───────────────────────── #}
-<section id="experience" class="py-4">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;overflow:hidden;">
-    <details open>
-      <summary class="section-toggle">Experience</summary>
-      <div style="margin-top:28px;">
-        {% for job in latest_experience %}
-        <div class="flex gap-5">
-          <div class="flex flex-col items-center pt-2 flex-shrink-0">
-            <div class="w-3 h-3 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50 ring-4 ring-blue-500/10"></div>
-            {% if not forloop.last %}
-              <div class="w-px flex-1 mt-1" style="background:linear-gradient(to bottom, #3b82f6, #1e293b);"></div>
-            {% endif %}
-          </div>
-          <div class="pb-10 flex-1" style="min-width:0;overflow-wrap:break-word;word-break:break-word;">
-            <p class="text-xs text-gray-500 font-mono mb-1 tracking-wider">
+{# ───────────────────────── JOURNEY (timeline) ───────────────────────── #}
+{% if journey_items %}
+<section id="journey" class="py-16">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1200px;">
+    <h2 class="section-heading">Journey</h2>
+
+    <div class="timeline mt-12">
+      <div class="timeline-spine" aria-hidden="true"></div>
+
+      {% for entry in journey_items %}
+      <div class="timeline-row {% cycle 'is-left' 'is-right' %}">
+        <div class="timeline-dot {% if entry.kind == 'certificate' %}is-cert{% endif %}"></div>
+
+        <div class="timeline-card reveal-side">
+          {% if entry.kind == 'experience' %}
+            {% with job=entry.obj %}
+            <p class="tl-date">
               {{ job.start_date|date:"M Y" }} —
-              {% if job.is_current %}<span class="text-blue-400">Present</span>{% else %}{{ job.end_date|date:"M Y" }}{% endif %}
+              {% if job.is_current %}<span class="text-cyan-300">Present</span>{% else %}{{ job.end_date|date:"M Y" }}{% endif %}
             </p>
-            <h3 class="text-lg font-bold text-white">{{ job.role }}</h3>
-            <p class="text-blue-400 font-medium text-sm mb-3">{{ job.company }}</p>
-            <div class="text-gray-400 text-sm leading-relaxed" style="overflow-wrap:break-word;word-break:break-word;">
-              {{ job.description|linebreaks }}
-            </div>
+            <p class="tl-kind">Experience</p>
+            <h3 class="tl-title">{{ job.role }}</h3>
+            <p class="tl-sub">{{ job.company }}</p>
+            <div class="tl-desc">{{ job.description|linebreaks }}</div>
             {% if job.related_skills.all %}
-            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;">
-              {% for skill in job.related_skills.all %}
-                <span class="text-xs px-2.5 py-0.5 bg-gray-800 text-gray-400 border border-gray-700 rounded-full"
-                      style="white-space:nowrap;">
-                  {{ skill.name }}
-                </span>
-              {% endfor %}
+            <div class="tl-tags">
+              {% for skill in job.related_skills.all %}<span class="tag">{{ skill.name }}</span>{% endfor %}
             </div>
             {% endif %}
-          </div>
-        </div>
-        {% empty %}
-        <p class="text-gray-500">No experience entries yet.</p>
-        {% endfor %}
-      </div>
-    </details>
-  </div>
-</section>
-
-{# ───────────────────────── CERTIFICATIONS ───────────────────────── #}
-<section id="certifications" class="py-4 border-t border-gray-800">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
-    <details open>
-      <summary class="section-toggle">Certifications</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;">
-        {% for cert in latest_certs %}
-        <a href="{{ cert.url|default:'#' }}" target="_blank"
-           style="min-width:260px;flex:1;"
-           class="flex items-center gap-4 p-4 bg-gray-800/80 border border-gray-700 rounded-xl
-                  hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-0.5
-                  transition-all group">
-          <div style="width:64px;height:44px;flex-shrink:0;"
-               class="bg-white rounded-lg p-1 overflow-hidden shadow-sm">
-            {% if cert.image %}
-              <img src="{{ cert.image.url }}" alt="{{ cert.name }}"
-                   style="width:100%;height:100%;object-fit:contain;">
-            {% else %}
-              <div class="w-full h-full flex items-center justify-center text-xl">🏆</div>
+            {% endwith %}
+          {% else %}
+            {% with cert=entry.obj %}
+            <p class="tl-date">{{ cert.date_issued|date:"M Y" }}</p>
+            <p class="tl-kind tl-kind-cert">Certification</p>
+            <div class="tl-cert-row">
+              {% if cert.image %}
+                <div class="tl-cert-img"><img src="{{ cert.image.url }}" alt="{{ cert.name }}"></div>
+              {% endif %}
+              <div class="min-w-0">
+                <h3 class="tl-title">{{ cert.name }}</h3>
+                <p class="tl-sub">{{ cert.issuer }}</p>
+              </div>
+            </div>
+            {% if cert.url %}
+              <a href="{{ cert.url }}" target="_blank" class="tl-cert-link">View credential ↗</a>
             {% endif %}
-          </div>
-          <div class="min-w-0">
-            <p class="text-sm font-semibold text-gray-200 group-hover:text-white leading-snug transition-colors">{{ cert.name }}</p>
-            <p class="text-xs text-gray-500 mt-0.5">{{ cert.issuer }} · {{ cert.date_issued|date:"Y" }}</p>
-          </div>
-          <svg style="width:13px;height:13px;flex-shrink:0;" class="text-gray-600 group-hover:text-blue-400 ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-          </svg>
-        </a>
-        {% empty %}
-        <p class="text-gray-500 text-sm">No certifications yet.</p>
-        {% endfor %}
-      </div>
-    </details>
-  </div>
-</section>
-
-{# ───────────────────────── EDUCATION ───────────────────────── #}
-<section id="education" class="py-4 border-t border-gray-800">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:1500px;">
-    <details open>
-      <summary class="section-toggle">Education</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:24px;margin-top:28px;">
-        {% for edu in education_list %}
-        <div class="relative pl-5 border-l-2 border-blue-500/30 hover:border-blue-500/70 transition-colors"
-             style="min-width:250px;flex:1;">
-          <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-gray-900 border-2 border-blue-500/60 shadow-sm shadow-blue-500/30"></div>
-          <h4 class="font-bold text-white text-sm leading-snug">{{ edu.institution }}</h4>
-          <p class="text-blue-400 text-sm mt-0.5">{{ edu.degree }}</p>
-          <p class="text-xs text-gray-500 mt-0.5 font-mono">
-            {{ edu.start_date|date:"Y" }} –
-            {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}
-          </p>
+            {% if cert.related_skills.all %}
+            <div class="tl-tags">
+              {% for skill in cert.related_skills.all %}<span class="tag">{{ skill.name }}</span>{% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+          {% endif %}
         </div>
-        {% empty %}
-        <p class="text-gray-500 text-sm">No education entries yet.</p>
-        {% endfor %}
       </div>
-    </details>
+      {% endfor %}
+    </div>
   </div>
 </section>
+{% endif %}
+
 
 <style>
-  /* Section headers — compact gradient pill */
-  .section-toggle {
+  /* ═══════════════════════════════════════════════
+     SECTION HEADING
+     ═══════════════════════════════════════════════ */
+  .section-heading {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #fff;
+    position: relative;
+    padding-bottom: 12px;
+    display: inline-block;
+  }
+  .section-heading::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 56px; height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    border-radius: 999px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 64px;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    background: linear-gradient(90deg, #60a5fa, #22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 0.01em;
+  }
+
+  .hero-btn-ghost {
+    padding: 10px 20px;
+    background: rgba(31,41,55,0.7);
+    backdrop-filter: blur(8px);
+    color: #e5e7eb;
+    border: 1px solid rgba(75,85,99,0.7);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .hero-btn-ghost:hover {
+    border-color: rgba(59,130,246,0.55);
+    background: rgba(31,41,55,0.95);
+    transform: translateY(-1px);
+  }
+
+  /* Hero photo */
+  .hero-image { display: flex; justify-content: center; }
+  @media (min-width: 768px) { .hero-image { justify-content: flex-end; } }
+
+  .hero-photo-wrap {
+    position: relative;
+    width: 240px; height: 240px;
+  }
+  @media (min-width: 768px) {
+    .hero-photo-wrap { width: 300px; height: 300px; }
+  }
+  .hero-photo {
+    position: relative;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+    border: 2px solid rgba(59,130,246,0.45);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+  .hero-photo-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(59,130,246,0.45), transparent 65%);
+    filter: blur(28px);
+    z-index: 0;
+    animation: hero-glow 5s ease-in-out infinite alternate;
+  }
+  .hero-photo-ring {
+    position: absolute;
+    inset: -12px;
+    border: 1px solid rgba(96,165,250,0.18);
+    border-radius: 9999px;
+    z-index: 1;
+    animation: hero-ring-spin 18s linear infinite;
+  }
+  .hero-photo-ring::before,
+  .hero-photo-ring::after {
+    content: '';
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #60a5fa, #22d3ee);
+    box-shadow: 0 0 12px rgba(96,165,250,0.7);
+  }
+  .hero-photo-ring::before { top: -4px; left: 50%; transform: translateX(-50%); }
+  .hero-photo-ring::after  { bottom: -4px; left: 50%; transform: translateX(-50%); }
+
+  @keyframes hero-glow {
+    0%   { opacity: 0.55; transform: scale(1); }
+    100% { opacity: 0.85; transform: scale(1.08); }
+  }
+  @keyframes hero-ring-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Hero entrance animations */
+  .reveal-left  { opacity: 0; transform: translateX(-40px); animation: slide-in-left 0.9s 0.1s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .reveal-right { opacity: 0; transform: translateX(40px);  animation: slide-in-right 0.9s 0.25s cubic-bezier(0.22,1,0.36,1) forwards; }
+
+  @keyframes slide-in-left  { to { opacity: 1; transform: translateX(0); } }
+  @keyframes slide-in-right { to { opacity: 1; transform: translateX(0); } }
+
+  /* ═══════════════════════════════════════════════
+     TECH STACK MARQUEE
+     ═══════════════════════════════════════════════ */
+  .marquee {
+    overflow: hidden;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 18px;
+    width: max-content;
+    animation: marquee-scroll 40s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+
+  @keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .skill-card {
+    flex: 0 0 auto;
+    width: 124px; height: 124px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px;
+    background: rgba(17,24,39,0.65);
+    border: 1px solid rgba(55,65,81,0.7);
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    transition: transform 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  }
+  .skill-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59,130,246,0.6);
+    background: rgba(17,24,39,0.9);
+    box-shadow: 0 12px 30px -10px rgba(59,130,246,0.4);
+  }
+  .skill-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; }
+  .skill-icon img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.25s; }
+  .skill-card:hover .skill-icon img { transform: scale(1.1); }
+  .skill-icon span { font-size: 2rem; }
+  .skill-name {
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* ═══════════════════════════════════════════════
+     PROJECTS GRID
+     ═══════════════════════════════════════════════ */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(17,24,39,0.7);
+    border: 1px solid rgba(55,65,81,0.7);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(6px);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(59,130,246,0.55);
+    box-shadow: 0 20px 40px -15px rgba(59,130,246,0.35);
+  }
+  .project-cover {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+  }
+  .project-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .project-card:hover .project-cover img { transform: scale(1.06); }
+  .project-cover-fade {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(17,24,39,0.85), transparent 60%);
+  }
+  .project-cover-empty {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1f2937, #0f172a);
+    font-size: 3rem;
+  }
+  .project-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+  .project-title {
+    font-size: 1.125rem; font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+    transition: color 0.2s;
+  }
+  .project-card:hover .project-title { color: #60a5fa; }
+  .project-summary {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+  .project-metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .metric-pill {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.7rem;
+    background: rgba(59,130,246,0.10);
+    border: 1px solid rgba(59,130,246,0.25);
+    color: #93c5fd;
+    border-radius: 8px;
+    padding: 3px 10px;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag {
+    font-size: 0.7rem;
+    color: #cbd5e1;
+    background: rgba(55,65,81,0.7);
+    border: 1px solid rgba(75,85,99,0.7);
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+  .project-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .project-link {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(55,65,81,0.7);
+    color: #d1d5db;
+    border: 1px solid rgba(75,85,99,0.7);
+    transition: all 0.2s;
+  }
+  .project-link:hover {
+    background: #2563eb;
+    color: #fff;
+    border-color: #3b82f6;
+  }
+
+  /* ═══════════════════════════════════════════════
+     TIMELINE / JOURNEY
+     ═══════════════════════════════════════════════ */
+  .timeline { position: relative; }
+
+  .timeline-spine {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background: linear-gradient(to bottom,
+      rgba(59,130,246,0) 0%,
+      rgba(59,130,246,0.5) 8%,
+      rgba(6,182,212,0.5) 92%,
+      rgba(6,182,212,0) 100%);
+  }
+
+  .timeline-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    margin-bottom: 36px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: 50%;
+    top: 28px;
+    transform: translate(-50%, 0);
+    width: 16px; height: 16px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    box-shadow:
+      0 0 0 4px rgba(15,23,42,1),
+      0 0 0 5px rgba(59,130,246,0.4),
+      0 0 18px rgba(59,130,246,0.6);
+    z-index: 2;
+  }
+  .timeline-dot.is-cert {
+    background: linear-gradient(135deg, #f59e0b, #f43f5e);
+    box-shadow:
+      0 0 0 4px rgba(15,23,42,1),
+      0 0 0 5px rgba(244,63,94,0.4),
+      0 0 18px rgba(244,63,94,0.5);
+  }
+
+  .timeline-card {
+    background: rgba(17,24,39,0.75);
+    border: 1px solid rgba(55,65,81,0.7);
+    border-radius: 14px;
+    padding: 20px 22px;
+    backdrop-filter: blur(6px);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .timeline-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(59,130,246,0.5);
+    box-shadow: 0 16px 32px -12px rgba(59,130,246,0.3);
+  }
+
+  /* Alternating placement */
+  .timeline-row.is-left  .timeline-card { grid-column: 1; }
+  .timeline-row.is-right .timeline-card { grid-column: 2; }
+
+  /* Reveal-side: hidden until in-view; direction set by row class */
+  .timeline-card.reveal-side {
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+                transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .timeline-row.is-left  .timeline-card.reveal-side { transform: translateX(-50px); }
+  .timeline-row.is-right .timeline-card.reveal-side { transform: translateX(50px); }
+  .timeline-card.reveal-side.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Card content styling */
+  .tl-date {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .tl-kind {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #60a5fa;
+    background: rgba(59,130,246,0.10);
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 999px;
+    padding: 2px 9px;
+    margin-bottom: 8px;
+  }
+  .tl-kind-cert {
+    color: #fca5a5;
+    background: rgba(244,63,94,0.10);
+    border-color: rgba(244,63,94,0.30);
+  }
+  .tl-title {
     font-size: 1.05rem;
     font-weight: 700;
-    letter-spacing: 0.03em;
-    color: #e2e8f0;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    user-select: none;
-    padding: 14px 20px;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
-    background: linear-gradient(135deg, rgba(37,99,235,0.18) 0%, rgba(6,182,212,0.10) 100%);
-    border: 1px solid rgba(59,130,246,0.22);
-    border-radius: 10px;
-    backdrop-filter: blur(4px);
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    color: #fff;
+    line-height: 1.3;
   }
-  .section-toggle::-webkit-details-marker { display: none; }
+  .tl-sub {
+    font-size: 0.85rem;
+    color: #60a5fa;
+    margin-top: 2px;
+    margin-bottom: 10px;
+  }
+  .tl-desc {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    line-height: 1.55;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 
-  /* Left accent bar */
-  .section-toggle::before {
-    content: '';
-    display: inline-block;
-    width: 3px;
-    height: 1.1em;
-    background: linear-gradient(to bottom, #3b82f6, #06b6d4);
-    border-radius: 999px;
+  .tl-cert-row { display: flex; align-items: center; gap: 14px; }
+  .tl-cert-img {
+    width: 56px; height: 40px;
     flex-shrink: 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px;
+    overflow: hidden;
   }
-
-  /* Chevron */
-  .section-toggle::after {
-    content: '';
+  .tl-cert-img img { width: 100%; height: 100%; object-fit: contain; }
+  .tl-cert-link {
     display: inline-block;
-    width: 8px; height: 8px;
-    border-right: 2px solid #60a5fa;
-    border-bottom: 2px solid #60a5fa;
-    transform: rotate(45deg);
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-    margin-left: auto;
-    margin-top: -2px;
+    margin-top: 12px;
+    font-size: 0.78rem;
+    color: #60a5fa;
+    transition: color 0.2s;
   }
-  details[open] > .section-toggle::after {
-    transform: rotate(-135deg);
-    margin-top: 3px;
+  .tl-cert-link:hover { color: #93c5fd; }
+
+  /* Mobile timeline: stack to single column with spine on left */
+  @media (max-width: 767px) {
+    .timeline-spine { left: 14px; transform: none; }
+    .timeline-row {
+      grid-template-columns: 1fr;
+      padding-left: 40px;
+    }
+    .timeline-row.is-left  .timeline-card,
+    .timeline-row.is-right .timeline-card { grid-column: 1; }
+    .timeline-dot { left: 14px; }
+    .timeline-row.is-left  .timeline-card.reveal-side,
+    .timeline-row.is-right .timeline-card.reveal-side { transform: translateX(-30px); }
   }
 
-  .section-toggle:hover {
-    color: #bfdbfe;
-    background: linear-gradient(135deg, rgba(37,99,235,0.28) 0%, rgba(6,182,212,0.16) 100%);
-    border-color: rgba(59,130,246,0.40);
+  /* ═══════════════════════════════════════════════
+     SCROLL-REVEAL (projects)
+     ═══════════════════════════════════════════════ */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1) var(--delay, 0ms),
+                transform 0.7s cubic-bezier(0.22,1,0.36,1) var(--delay, 0ms);
+  }
+  .reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  details { width: 100%; }
-
-  /* Hero image responsive */
-  .hero-desktop-img { display: none; }
-  .hero-mobile-img  { display: flex; }
-  @media (min-width: 768px) {
-    .hero-desktop-img { display: block; }
-    .hero-mobile-img  { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-up, .reveal-side, .reveal-left, .reveal-right {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .marquee-track, .hero-photo-glow, .hero-photo-ring { animation: none !important; }
   }
 </style>
+
+<script>
+  (function () {
+    const targets = document.querySelectorAll('.reveal-up, .reveal-side');
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    targets.forEach(el => io.observe(el));
+  })();
+</script>
 
 {% endblock %}
